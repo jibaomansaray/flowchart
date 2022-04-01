@@ -4,6 +4,6 @@ import { EntityType } from "../entity_types";
 export class StartShapeEntity extends CircleEntity{
 
   constructor(id?: string) {
-    super(id, EntityType.START);
+    super(id, EntityType.FLOWCHART_START);
   }
 }

@@ -1,6 +1,8 @@
 export enum ComponentTypes {
+  FILLABLE = 'fillable',
   POSITION = 'position',
   CIRCLE = 'circle',
+  SIZE = 'size',
 }
 
 export interface IComponent {

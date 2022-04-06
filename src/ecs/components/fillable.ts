@@ -3,11 +3,13 @@ import { ComponentTypes, IComponent } from "./component_types";
 export class FillableComponent implements IComponent {
 
   private _fill: boolean;
-  private _fillStyle: string
+  private _fillStyle: string;
+  private _tempFillStyle: string;
 
   constructor(fill = true, fillStyle = 'black') {
     this._fill = fill;
     this._fillStyle = fillStyle;
+    this._tempFillStyle = '';
   }
 
   get type(): ComponentTypes {
@@ -23,17 +25,25 @@ export class FillableComponent implements IComponent {
   }
 
   get fillStyle() {
-    return this._fillStyle;
+    return this._tempFillStyle || this._fillStyle;
   }
 
   set fillStyle(style: string) {
     this._fillStyle = style;
   }
 
+  get tempFillStyle() {
+    return this._tempFillStyle;
+  }
+
+  set tempFillStyle(s: string) {
+    this._tempFillStyle = s;
+  }
+
   toJSON(): { [key: string]: any; } {
     return {
       fill: this.fill,
-      fillStyle: this.fillStyle
+      fillStyle: this._fillStyle // we don't want the temp color 
     };
   }
 

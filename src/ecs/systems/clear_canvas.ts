@@ -14,3 +14,5 @@ export class ClearCanvas implements ISystem {
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
 }
+
+export const clearCanvas = new ClearCanvas();

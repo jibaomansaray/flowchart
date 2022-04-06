@@ -1,5 +1,6 @@
 import { CircleComponent } from "../components/circle";
 import { ComponentTypes, IComponent } from "../components/component_types";
+import { DrawableComponent } from "../components/drawable";
 import { FillableComponent } from "../components/fillable";
 import { Position } from "../components/position";
 import { IEntity } from "../entities/entity_types";
@@ -11,7 +12,7 @@ export class RenderCircle implements ISystem {
   }
 
   update(entities: Map<string, IEntity>, ctx: CanvasRenderingContext2D): void {
-    const list = [ComponentTypes.POSITION, ComponentTypes.CIRCLE];
+    const list = [ComponentTypes.POSITION, ComponentTypes.CIRCLE, ComponentTypes.DRAWABLE];
 
     entities.forEach((ent) => {
       const components = ent.components(list, false);
@@ -24,6 +25,7 @@ export class RenderCircle implements ISystem {
   private render(components: Map<ComponentTypes, IComponent>, ctx: CanvasRenderingContext2D, ent: IEntity) {
     const pos = components.get(ComponentTypes.POSITION)! as Position;
     const circle = components.get(ComponentTypes.CIRCLE)! as CircleComponent;
+    const drawable = components.get(ComponentTypes.DRAWABLE)! as DrawableComponent;
     const fillable = ent.get(ComponentTypes.FILLABLE);
 
 
@@ -32,6 +34,7 @@ export class RenderCircle implements ISystem {
     ctx.beginPath();
     ctx.arc(pos.x, pos.y, circle.radius, circle.startAngle, circle.endAngle, circle.counterClockwise);
 
+    ctx.strokeStyle = drawable.strokeStyle;
     if (fillable && (fillable as FillableComponent).fill) {
       ctx.fillStyle = (fillable as FillableComponent).fillStyle;
       ctx.fill();
@@ -40,3 +43,5 @@ export class RenderCircle implements ISystem {
     }
   }
 }
+
+export const renderCircle = new RenderCircle();

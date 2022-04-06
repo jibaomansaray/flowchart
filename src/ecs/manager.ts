@@ -1,7 +1,12 @@
 import { IEntity } from "./entities/entity_types";
 import { ISystem } from "./systems/system_types";
 
-export class Manager {
+/**
+ * Manager class
+ * 
+ * An instance of this class is exported
+ */
+class Manager {
   private _systems: Array<ISystem>;
   private _entities: Map<string, IEntity>;
 
@@ -37,3 +42,5 @@ export class Manager {
     })
   }
 }
+
+export const manager = new Manager();

@@ -54,7 +54,7 @@ export class Entity implements IEntity {
     return cmp || null;
   }
 
-  toJSON(): { [key: string]: any; } {
+  toJSON(): { [key: string]: any; } | null {
     const list:{[key:string]: {[key:string]: any}} = {};
 
     this._component.forEach((cmp) => {

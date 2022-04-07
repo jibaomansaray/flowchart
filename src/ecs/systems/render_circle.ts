@@ -33,6 +33,8 @@ export class RenderCircle implements ISystem {
     ctx.arc(pos.x, pos.y, circle.radius, circle.startAngle, circle.endAngle, circle.counterClockwise);
 
     ctx.strokeStyle = drawable.strokeStyle;
+    ctx.setLineDash(drawable.lineDash);
+
     if (fillable && (fillable as FillableComponent).fill) {
       ctx.fillStyle = (fillable as FillableComponent).fillStyle;
       ctx.fill();

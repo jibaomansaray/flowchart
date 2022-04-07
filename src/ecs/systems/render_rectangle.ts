@@ -25,6 +25,8 @@ export class RenderRectangle implements ISystem {
     const fillable = ent.get(ComponentTypes.FILLABLE);
 
     ctx.strokeStyle = drawable.strokeStyle;
+    ctx.setLineDash(drawable.lineDash);
+
     if (fillable && (fillable as FillableComponent).fill) {
       ctx.fillStyle = (fillable as FillableComponent).fillStyle;
       ctx.fillRect(pos.x, pos.y, size.width, size.height);

@@ -21,6 +21,7 @@ export class MouseCollisionDetection implements ISystem {
       this.y = event.offsetY;
     });
 
+
     canvas.addEventListener('mouseleave', (_event: MouseEvent) => {
       this.mouseOver = false;
       this.x = -1;

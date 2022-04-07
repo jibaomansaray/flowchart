@@ -4,10 +4,12 @@ export class DrawableComponent implements IComponent {
 
   private _strokeStyle: string;
   private _tempStrokeStyle: string;
+  private _lineDash: number[];
 
   constructor(strokeStyle = 'black') {
     this._strokeStyle = strokeStyle;
     this._tempStrokeStyle = '';
+    this._lineDash = [];
   }
 
   get type(): ComponentTypes {
@@ -25,6 +27,26 @@ export class DrawableComponent implements IComponent {
   set tempStrokeStyle(s: string) {
     this._tempStrokeStyle = s;
   }
+
+  get lineDash() {
+    return this._lineDash
+  }
+
+  set lineDash(n: number[]) {
+    this._lineDash = []
+    if (n.length >= 2) {
+      this._lineDash[0] = n[0];
+      this._lineDash[1] = n[1];
+    }
+  }
+
+  public setLineDash(line: number, space: number) {
+    this._lineDash = [
+      line,
+      space
+    ];
+  }
+
 
   toJSON(): { [key: string]: any; } {
     return {

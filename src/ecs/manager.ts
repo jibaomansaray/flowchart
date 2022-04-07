@@ -1,5 +1,5 @@
-import { IEntity } from "./entities/entity_types";
-import { ISystem } from "./systems/system_types";
+import { IEntity } from "./types/entity_types";
+import { ISystem } from "./types/system_types";
 
 /**
  * Manager class
@@ -24,23 +24,49 @@ class Manager {
     return this;
   }
 
-  newEntity<T extends IEntity>(entity: T): T {
-    this._entities.set(entity.id, entity);
+  addEntity<T extends IEntity>(entity: T | Array<T>): T | Array<T> {
+    entity = (Array.isArray(entity)) ? entity : [entity];
+    entity.forEach((e) => {
+      this._entities.set(e.id, e);
+    })
     return entity;
   }
 
-  setup(canvas: HTMLCanvasElement): Manager {
+  run(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    let shouldUpdate = false;
     this._systems.forEach((s) => {
       s.setup(canvas);
     })
-    return this;
+
+    const updateSystems = (ts: number) => {
+      this.update(ctx, ts);
+      if (shouldUpdate) {
+        requestAnimationFrame(updateSystems);
+      }
+    }
+    updateSystems(0);
+
+    canvas.addEventListener('mouseleave', () => {
+      shouldUpdate = false;
+    })
+
+    canvas.addEventListener('mouseenter', () => {
+      if (!shouldUpdate) {
+        shouldUpdate = true;
+        updateSystems(0);
+      }
+    });
+
   }
 
-  update(ctx: CanvasRenderingContext2D) {
+  private update(ctx: CanvasRenderingContext2D, ts: number) {
     this._systems.forEach((s) => {
-      s.update(this._entities, ctx);
-    })
+      this._entities.forEach((entity) => {
+        s.update(entity, ctx, ts);
+      });
+    });
   }
+
 }
 
 export const manager = new Manager();

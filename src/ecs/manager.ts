@@ -67,7 +67,14 @@ class Manager {
         updateSystems(0);
       }
     });
+  }
 
+  public toJSON(): Array<{ [key:string]:any }> {
+    const json: Array<{[key:string]: any}> = [];
+    this._entities.forEach((e) => {
+      json.push(e.toJSON());
+    })
+    return json;
   }
 
   private update(ctx: CanvasRenderingContext2D, ts: number) {

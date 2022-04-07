@@ -17,7 +17,7 @@ export class CircleEntity extends Entity {
     this.add(new CircleComponent());
     this.add(new MouseCollisionComponent());
     this.add(new DrawableComponent());
-    this.add(new InteractComponent());
+    this.add(new InteractComponent(this));
   }
 
 }

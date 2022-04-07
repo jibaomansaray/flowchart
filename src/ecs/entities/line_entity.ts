@@ -13,6 +13,6 @@ export class LineEntity extends Entity {
     this.add(new LineComponent());
     this.add(new MouseCollisionComponent());
     this.add(new DrawableComponent());
-    this.add(new InteractComponent());
+    this.add(new InteractComponent(this));
   }
 }

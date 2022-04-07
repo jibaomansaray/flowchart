@@ -16,6 +16,6 @@ export class RectangleEntity extends Entity {
     this.add(new SizeComponent());
     this.add(new MouseCollisionComponent());
     this.add(new DrawableComponent());
-    this.add(new InteractComponent());
+    this.add(new InteractComponent(this));
   }
 }

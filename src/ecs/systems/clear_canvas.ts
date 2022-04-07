@@ -4,7 +4,6 @@ import { ISystem } from "../types/system_types";
 export class ClearCanvas implements ISystem {
   private canvasWidth: number = 0;
   private canvasHeight: number = 0;
-  private clear: boolean = false;
   private lastTs: number = 0;
 
   setup(canvas: HTMLCanvasElement): void {

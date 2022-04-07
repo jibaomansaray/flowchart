@@ -9,12 +9,16 @@ import { ISystem } from "./types/system_types";
 class Manager {
   private _systems: Array<ISystem>;
   private _entities: Map<string, IEntity>;
+  private _id = 0;
 
   constructor() {
     this._systems = [];
     this._entities = new Map()
   }
 
+  newId() {
+    return (++this._id).toString();
+  }
 
   addSystem(system: ISystem | Array<ISystem>): Manager {
     const list = (Array.isArray(system)) ? system : [system];

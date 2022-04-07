@@ -36,6 +36,14 @@ export class CircleComponent implements IComponent {
     return this._endAngle;
   }
 
+  get width() {
+    return this.radius * 2;
+  }
+
+  get height() {
+    return this.radius * 2;
+  }
+
   set endAngle(v: number) {
     this._endAngle = v;
   }

@@ -5,7 +5,8 @@ export enum ComponentTypes {
   CIRCLE = 'circle',
   SIZE = 'size',
   MOUSE_COLLISION = 'mouse_collision',
-  INTERACT = 'interact'
+  INTERACT = 'interact',
+  LINE = 'line'
 }
 
 export interface IComponent {

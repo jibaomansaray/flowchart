@@ -1,5 +1,5 @@
-import { ComponentTypes, IComponent } from '../components/component_types';
-import { EntityType, IEntity } from './entity_types'
+import { ComponentTypes, IComponent } from '../types/component_types';
+import { EntityType, IEntity } from '../types/entity_types'
 export class Entity implements IEntity {
 
   protected _id: string;

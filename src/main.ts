@@ -1,15 +1,17 @@
 import { CircleComponent } from './ecs/components/circle';
-import { ComponentTypes, IComponent } from './ecs/components/component_types';
+import { ComponentTypes, IComponent } from './ecs/types/component_types';
 import { FillableComponent } from './ecs/components/fillable';
+import { InteractComponent } from './ecs/components/interact';
 import { Position } from './ecs/components/position';
 import { SizeComponent } from './ecs/components/size';
 import { StartShapeEntity } from './ecs/entities/flowchart/start_shape';
 import { RectangleEntity } from './ecs/entities/rectangle_entity';
-import { Manager } from './ecs/manager';
-import { ChangeCircleFill } from './ecs/systems/change_circle_fill';
-import { ClearCanvas } from './ecs/systems/clear_canvas';
-import { RenderCircle } from './ecs/systems/render_circle';
-import { RenderRectangle } from './ecs/systems/render_rectangle';
+import { manager } from './ecs/manager';
+import { clearCanvas } from './ecs/systems/clear_canvas';
+import { interaction } from './ecs/systems/interaction';
+import { mouseCollisionDetection } from './ecs/systems/mouse_collision_detection';
+import { renderCircle } from './ecs/systems/render_circle';
+import { renderRectangle } from './ecs/systems/render_rectangle';
 import './style.css'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
@@ -37,18 +39,18 @@ circle.get(ComponentTypes.POSITION, (com: IComponent) => {
 
 circle.get(ComponentTypes.CIRCLE, (com: IComponent) => {
   const circle = com as CircleComponent;
-  circle.radius = 40;
+  circle.radius = 100;
 })
 
 const circle2 = new StartShapeEntity('b');
 circle2.get(ComponentTypes.POSITION, (com: IComponent) => {
   const pos = com as Position;
-  pos.x = 75;
-  pos.y = 75;
+  pos.x = 200;
+  pos.y = 200;
 });
 circle2.get(ComponentTypes.CIRCLE, (com: IComponent) => {
   const circle = com as CircleComponent;
-  circle.radius = 10;
+  circle.radius = 100;
 })
 
 circle.get(ComponentTypes.FILLABLE, (com: IComponent) => {
@@ -58,36 +60,35 @@ circle.get(ComponentTypes.FILLABLE, (com: IComponent) => {
 const rect1 = new RectangleEntity('rect1');
 rect1.get(ComponentTypes.POSITION, (com) => {
   const pos = com as Position;
-  pos.x = 250;
-  pos.y = 250;
+  pos.x = 460;
+  pos.y = 200;
 });
 
 rect1.get(ComponentTypes.SIZE, (com) => {
   const size = com as SizeComponent;
-  size.width = 25;
-  size.height = 25;
+  size.width = 100;
+  size.height = 100;
 });
 
-const manager = new Manager();
-
-const systems = [
-  new ClearCanvas(),
-  new RenderCircle(),
-  new ChangeCircleFill(),
-  new RenderRectangle(),
-];
+rect1.get(ComponentTypes.INTERACT, (com) => { 
+  const interact = com as InteractComponent;
+  interact.fillStyle = 'yellow';
+});
 
 
-manager.newEntity(circle);
-manager.newEntity(circle2);
-manager.newEntity(rect1);
+manager.addSystem([
+  clearCanvas,
+  mouseCollisionDetection,
+  renderCircle,
+  renderRectangle,
+  interaction
+]);
 
-manager.addSystem(systems)
+manager.addEntity([
+  circle,
+  circle2,
+  rect1
+]);
 
-manager.setup(canvas);
-
-const updateSystems = () => {
-  manager.update(ctx);
-  requestAnimationFrame(updateSystems);
-}
-updateSystems();
+manager.addEntity(rect1);
+manager.run(canvas, ctx);

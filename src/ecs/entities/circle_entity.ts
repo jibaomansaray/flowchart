@@ -5,7 +5,7 @@ import { FillableComponent } from "../components/fillable";
 import { InteractComponent } from "../components/interact";
 import { MouseCollisionComponent } from "../components/mouse_collision";
 import { Position } from "../components/position";
-import { EntityType } from "./entity_types";
+import { EntityType } from "../types/entity_types";
 
 export class CircleEntity extends Entity {
 

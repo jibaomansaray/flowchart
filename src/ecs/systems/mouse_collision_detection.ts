@@ -1,10 +1,10 @@
 import { CircleComponent } from "../components/circle";
-import { ComponentTypes, IComponent } from "../components/component_types";
+import { ComponentTypes, IComponent } from "../types/component_types";
 import { MouseCollisionComponent } from "../components/mouse_collision";
 import { Position } from "../components/position";
 import { SizeComponent } from "../components/size";
-import { IEntity } from "../entities/entity_types";
-import { ISystem } from "./system_types";
+import { IEntity } from "../types/entity_types";
+import { ISystem } from "../types/system_types";
 
 
 export class MouseCollisionDetection implements ISystem {
@@ -28,20 +28,19 @@ export class MouseCollisionDetection implements ISystem {
     });
   }
 
-  update(entities: Map<string, IEntity>, _ctx: CanvasRenderingContext2D): void {
+  update(entity: IEntity, _ctx: CanvasRenderingContext2D, _timestamp: number): void {
     if (this.mouseOver) {
       const circle = [ComponentTypes.POSITION, ComponentTypes.CIRCLE, ComponentTypes.MOUSE_COLLISION];
       const rectangle = [ComponentTypes.POSITION, ComponentTypes.SIZE, ComponentTypes.MOUSE_COLLISION];
 
-      entities.forEach((ent) => {
-        const circleComponents = ent.components(circle, false);
-        const rectangleComponents = ent.components(rectangle, false);
-        if (circleComponents) {
-          this.detectCircleCollision(circleComponents);
-        } else if (rectangleComponents) {
-          this.detectRectangleCollision(rectangleComponents);
-        }
-      });
+      const circleComponents = entity.components(circle, false);
+      const rectangleComponents = entity.components(rectangle, false);
+      if (circleComponents) {
+        this.detectCircleCollision(circleComponents);
+      } else if (rectangleComponents) {
+        this.detectRectangleCollision(rectangleComponents);
+      }
+
     }
   }
 
@@ -69,7 +68,7 @@ export class MouseCollisionDetection implements ISystem {
     const mouse = components.get(ComponentTypes.MOUSE_COLLISION)! as MouseCollisionComponent;
     const size = components.get(ComponentTypes.SIZE)! as SizeComponent;
 
-    if (this.x >= pos.x && this.y >= pos.y && this.x <= (pos.x + size.width) && this.y <= ( pos.y + size.height)) {
+    if (this.x >= pos.x && this.y >= pos.y && this.x <= (pos.x + size.width) && this.y <= (pos.y + size.height)) {
       mouse.x = this.x;
       mouse.y = this.y;
       mouse.detected = true;

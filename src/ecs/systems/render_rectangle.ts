@@ -1,23 +1,20 @@
-import { IEntity } from "../entities/entity_types";
-import { ISystem } from "./system_types";
-import { ComponentTypes, IComponent } from "../components/component_types";
+import { IEntity } from "../types/entity_types";
+import { ISystem } from "../types/system_types";
+import { ComponentTypes, IComponent } from "../types/component_types";
 import { Position } from "../components/position";
 import { SizeComponent } from "../components/size";
 import { FillableComponent } from "../components/fillable";
 import { DrawableComponent } from "../components/drawable";
 
 export class RenderRectangle implements ISystem {
-  setup(_canvas: HTMLCanvasElement): void {}
+  setup(_canvas: HTMLCanvasElement): void { }
 
-  update(entities: Map<string, IEntity>, ctx: CanvasRenderingContext2D): void {
+  update(entity: IEntity, ctx: CanvasRenderingContext2D, _timestamp: number): void {
     const list = [ComponentTypes.POSITION, ComponentTypes.SIZE, ComponentTypes.DRAWABLE];
-
-    entities.forEach((ent) => {
-      const components = ent.components(list, false);
-      if (components) {
-        this.render(components, ctx, ent);
-      }
-    })
+    const components = entity.components(list, false);
+    if (components) {
+      this.render(components, ctx, entity);
+    }
   }
 
 

@@ -1,5 +1,5 @@
 import { Entity } from ".";
-import { EntityType } from "./entity_types";
+import { EntityType } from "../types/entity_types";
 import { Position } from "../components/position";
 import { FillableComponent } from "../components/fillable";
 import { SizeComponent } from "../components/size";

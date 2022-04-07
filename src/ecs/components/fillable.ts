@@ -1,4 +1,4 @@
-import { ComponentTypes, IComponent } from "./component_types";
+import { ComponentTypes, IComponent } from "../types/component_types";
 
 export class FillableComponent implements IComponent {
 

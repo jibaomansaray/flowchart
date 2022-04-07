@@ -1,4 +1,4 @@
-import { ComponentTypes, IComponent } from "./component_types";
+import { ComponentTypes, IComponent } from "../types/component_types";
 
 export class CircleComponent implements IComponent {
   private _radius: number;

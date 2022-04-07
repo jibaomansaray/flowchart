@@ -1,12 +1,19 @@
+import { InteractEntity } from "../entities/interact_entity";
+import { manager } from "../manager";
 import { ComponentTypes, IComponent } from "../types/component_types";
+import { IEntity } from "../types/entity_types";
 
 export class InteractComponent implements IComponent {
   private _strokeStyle: string;
   private _fillStyle: string;
+  private _box: IEntity;
 
-  constructor() {
+  constructor(entity: IEntity) {
     this._fillStyle = 'green';
     this._strokeStyle = 'red';
+    this._box = new InteractEntity(entity);
+
+    manager.addEntity(this._box);
   }
 
   get type(): ComponentTypes {
@@ -27,6 +34,10 @@ export class InteractComponent implements IComponent {
 
   set strokeStyle(s: string) {
     this._strokeStyle = s;
+  }
+
+  get box() {
+    return this._box;
   }
 
   toJSON(): { [key: string]: any; } {

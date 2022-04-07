@@ -4,6 +4,7 @@ export enum EntityType {
   CIRCLE = 'circle',
   RECTANGLE = 'rectangle',
   LINE = 'line',
+  INTERACT = 'interact',
   FLOWCHART_START = 'start',
   FLOWCHART_STATE = 'state',
   FLOWCHART_CONDITION = 'condition',
@@ -17,6 +18,6 @@ export interface IEntity {
   components(types: Array<ComponentTypes>, any: boolean): Map<ComponentTypes, IComponent> | null;
   add(component: IComponent | Array<IComponent>): void;
   get(type: ComponentTypes, callback?: (component: IComponent) => void): IComponent | null;
-  toJSON(): { [key:string]: any };
+  toJSON(): { [key:string]: any } | null;
   fromJSON(json: { [key:string]: any }): void;
 }

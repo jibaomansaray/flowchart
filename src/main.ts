@@ -13,6 +13,10 @@ import { mouseCollisionDetection } from './ecs/systems/mouse_collision_detection
 import { renderCircle } from './ecs/systems/render_circle';
 import { renderRectangle } from './ecs/systems/render_rectangle';
 import './style.css'
+import { renderLine } from './ecs/systems/render_line';
+import { LineEntity } from './ecs/entities/line_entity';
+import { LineComponent } from './ecs/components/line';
+import { DrawableComponent } from './ecs/components/drawable';
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
@@ -29,7 +33,7 @@ const canvas = document.querySelector<HTMLCanvasElement>('#stage')!
 
 const ctx = canvas.getContext('2d')!;
 
-const circle = new StartShapeEntity('a');
+const circle = new StartShapeEntity();
 
 circle.get(ComponentTypes.POSITION, (com: IComponent) => {
   const pos = com as Position;
@@ -42,7 +46,7 @@ circle.get(ComponentTypes.CIRCLE, (com: IComponent) => {
   circle.radius = 100;
 })
 
-const circle2 = new StartShapeEntity('b');
+const circle2 = new StartShapeEntity();
 circle2.get(ComponentTypes.POSITION, (com: IComponent) => {
   const pos = com as Position;
   pos.x = 200;
@@ -55,9 +59,9 @@ circle2.get(ComponentTypes.CIRCLE, (com: IComponent) => {
 
 circle.get(ComponentTypes.FILLABLE, (com: IComponent) => {
   (com as FillableComponent).fill = false;
- });
+});
 
-const rect1 = new RectangleEntity('rect1');
+const rect1 = new RectangleEntity();
 rect1.get(ComponentTypes.POSITION, (com) => {
   const pos = com as Position;
   pos.x = 460;
@@ -70,9 +74,24 @@ rect1.get(ComponentTypes.SIZE, (com) => {
   size.height = 100;
 });
 
-rect1.get(ComponentTypes.INTERACT, (com) => { 
+rect1.get(ComponentTypes.INTERACT, (com) => {
   const interact = com as InteractComponent;
   interact.fillStyle = 'yellow';
+});
+
+const line1 = new LineEntity();
+line1.get(ComponentTypes.LINE, (c) => {
+  const line = c as LineComponent;
+  line.aX = 0;
+  line.aY = 50;
+
+  line.bX = 600;
+  line.bY = 500;
+});
+
+line1.get(ComponentTypes.DRAWABLE, (c) => {
+  const draw = c as DrawableComponent;
+  draw.strokeStyle = 'red'
 });
 
 
@@ -81,14 +100,18 @@ manager.addSystem([
   mouseCollisionDetection,
   renderCircle,
   renderRectangle,
+  renderLine,
   interaction
 ]);
 
 manager.addEntity([
   circle,
   circle2,
-  rect1
+  rect1,
+  line1
 ]);
 
 manager.addEntity(rect1);
 manager.run(canvas, ctx);
+
+console.log(manager.toJSON());

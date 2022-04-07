@@ -1,3 +1,4 @@
+import { manager } from '../manager';
 import { ComponentTypes, IComponent } from '../types/component_types';
 import { EntityType, IEntity } from '../types/entity_types'
 export class Entity implements IEntity {
@@ -7,7 +8,7 @@ export class Entity implements IEntity {
   protected _type: EntityType;
 
   constructor(type: EntityType,id?: string) {
-    this._id = id || '_' + Date.now();
+    this._id = id || manager.newId();
     this._component = new Map();
     this._type = type;
   }

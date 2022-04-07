@@ -36,6 +36,13 @@ class Manager {
     return entity;
   }
 
+  removeEntity(id: Array<string> | string) {
+    const entity = (Array.isArray(id)) ? id: [id];
+    entity.forEach((e) => {
+      this._entities.delete(e);
+    })
+  }
+
   run(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     let shouldUpdate = false;
     this._systems.forEach((s) => {

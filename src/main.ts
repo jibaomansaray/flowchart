@@ -43,7 +43,7 @@ circle.get(ComponentTypes.POSITION, (com: IComponent) => {
 
 circle.get(ComponentTypes.CIRCLE, (com: IComponent) => {
   const circle = com as CircleComponent;
-  circle.radius = 100;
+  circle.radius = 50;
 })
 
 const circle2 = new StartShapeEntity();
@@ -54,7 +54,7 @@ circle2.get(ComponentTypes.POSITION, (com: IComponent) => {
 });
 circle2.get(ComponentTypes.CIRCLE, (com: IComponent) => {
   const circle = com as CircleComponent;
-  circle.radius = 100;
+  circle.radius = 50;
 })
 
 circle.get(ComponentTypes.FILLABLE, (com: IComponent) => {
@@ -82,11 +82,11 @@ rect1.get(ComponentTypes.INTERACT, (com) => {
 const line1 = new LineEntity();
 line1.get(ComponentTypes.LINE, (c) => {
   const line = c as LineComponent;
-  line.aX = 0;
-  line.aY = 50;
+  line.aX = 100;
+  line.aY = 100;
 
-  line.bX = 600;
-  line.bY = 500;
+  line.bX = 200;
+  line.bY = 200;
 });
 
 line1.get(ComponentTypes.DRAWABLE, (c) => {
@@ -94,6 +94,42 @@ line1.get(ComponentTypes.DRAWABLE, (c) => {
   draw.strokeStyle = 'red'
 });
 
+const rect2 = new RectangleEntity();
+
+rect2.get(ComponentTypes.FILLABLE, (com) => {
+  const fill = com as FillableComponent;
+  fill.fill = false;
+});
+
+rect2.get(ComponentTypes.POSITION, (com) => {
+  const pos = com as Position;
+  pos.x = 50;
+  pos.y = 300;
+});
+rect2.get(ComponentTypes.SIZE, (com) => {
+  const size = com as SizeComponent;
+  size.width = 200;
+  size.height = 100;
+});
+
+rect2.get(ComponentTypes.INTERACT, (com) => {
+  const interact = com as InteractComponent;
+  interact.fillStyle = 'pink';
+});
+
+line1.get(ComponentTypes.LINE, (c) => {
+  const line = c as LineComponent;
+  line.aX = 100;
+  line.aY = 100;
+
+  line.bX = 200;
+  line.bY = 200;
+});
+
+line1.get(ComponentTypes.DRAWABLE, (c) => {
+  const draw = c as DrawableComponent;
+  draw.strokeStyle = 'red'
+});
 
 manager.addSystem([
   clearCanvas,
@@ -108,7 +144,8 @@ manager.addEntity([
   circle,
   circle2,
   rect1,
-  line1
+  line1,
+  rect2
 ]);
 
 manager.addEntity(rect1);

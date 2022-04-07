@@ -3,11 +3,12 @@ import { ComponentTypes, IComponent } from "../types/component_types";
 export enum EntityType {
   CIRCLE = 'circle',
   RECTANGLE = 'rectangle',
+  LINE = 'line',
   FLOWCHART_START = 'start',
   FLOWCHART_STATE = 'state',
   FLOWCHART_CONDITION = 'condition',
   FLOWCHART_END = 'end',
-  FLOWCHART_FLOW = 'flow'
+  FLOWCHART_FLOW = 'flow',
 }
 
 export interface IEntity {

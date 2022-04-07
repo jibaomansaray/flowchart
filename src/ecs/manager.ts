@@ -37,14 +37,14 @@ class Manager {
   }
 
   removeEntity(id: Array<string> | string) {
-    const entity = (Array.isArray(id)) ? id: [id];
+    const entity = (Array.isArray(id)) ? id : [id];
     entity.forEach((e) => {
       this._entities.delete(e);
     })
   }
 
   run(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-    let shouldUpdate = false;
+    let shouldUpdate = true;
     this._systems.forEach((s) => {
       s.setup(canvas);
     })
@@ -58,7 +58,7 @@ class Manager {
     updateSystems(0);
 
     canvas.addEventListener('mouseleave', () => {
-      shouldUpdate = false;
+      // shouldUpdate = false;
     })
 
     canvas.addEventListener('mouseenter', () => {
@@ -69,10 +69,13 @@ class Manager {
     });
   }
 
-  public toJSON(): Array<{ [key:string]:any }> {
-    const json: Array<{[key:string]: any}> = [];
+  public toJSON(): Array<{ [key: string]: any }> {
+    const json: Array<{ [key: string]: any }> = [];
     this._entities.forEach((e) => {
-      json.push(e.toJSON());
+      const d = e.toJSON();
+      if (d) {
+        json.push(d);
+      }
     })
     return json;
   }

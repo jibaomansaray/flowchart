@@ -17,6 +17,8 @@ import { renderLine } from './ecs/systems/render_line';
 import { LineEntity } from './ecs/entities/line_entity';
 import { LineComponent } from './ecs/components/line';
 import { DrawableComponent } from './ecs/components/drawable';
+import { connection } from './ecs/systems/connection';
+import { ConnectableComponent } from './ecs/components/connectable';
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
@@ -24,7 +26,7 @@ app.innerHTML = `
   <h1>Hello Vite!</h1>
   <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
   <center>
-    <canvas id="stage" width="600" height="600"><canvas>
+    <canvas id="stage" width="900" height="800"><canvas>
   </center>
 `
 
@@ -64,8 +66,8 @@ circle.get(ComponentTypes.FILLABLE, (com: IComponent) => {
 const rect1 = new RectangleEntity();
 rect1.get(ComponentTypes.POSITION, (com) => {
   const pos = com as Position;
-  pos.x = 460;
-  pos.y = 200;
+  pos.x = 300;
+  pos.y = 60;
 });
 
 rect1.get(ComponentTypes.SIZE, (com) => {
@@ -104,7 +106,7 @@ rect2.get(ComponentTypes.FILLABLE, (com) => {
 rect2.get(ComponentTypes.POSITION, (com) => {
   const pos = com as Position;
   pos.x = 50;
-  pos.y = 300;
+  pos.y = 500;
 });
 rect2.get(ComponentTypes.SIZE, (com) => {
   const size = com as SizeComponent;
@@ -117,18 +119,31 @@ rect2.get(ComponentTypes.INTERACT, (com) => {
   interact.fillStyle = 'pink';
 });
 
+
+rect2.get(ComponentTypes.CONNECTABLE, (c) => {
+  const conn = c as ConnectableComponent;
+  conn.add(rect1.id);
+  conn.add(circle2.id);
+});
+
+circle.get(ComponentTypes.CONNECTABLE, (c) => {
+  const conn = c as ConnectableComponent;
+  conn.add(rect1.id);
+  conn.add(circle2.id);
+})
+
 line1.get(ComponentTypes.LINE, (c) => {
   const line = c as LineComponent;
-  line.aX = 100;
-  line.aY = 100;
+  line.aX = 200 + 50;
+  line.aY = 350;
 
-  line.bX = 200;
-  line.bY = 200;
+  line.bX = 460;
+  line.bY = 250;
 });
 
 line1.get(ComponentTypes.DRAWABLE, (c) => {
   const draw = c as DrawableComponent;
-  draw.strokeStyle = 'red'
+  draw.strokeStyle = 'yellow'
 });
 
 manager.addSystem([
@@ -137,7 +152,8 @@ manager.addSystem([
   renderCircle,
   renderRectangle,
   renderLine,
-  interaction
+  interaction,
+  connection
 ]);
 
 manager.addEntity([

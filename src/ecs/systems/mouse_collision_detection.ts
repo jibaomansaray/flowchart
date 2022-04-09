@@ -82,27 +82,36 @@ export class MouseCollisionDetection implements ISystem {
     const distance = Math.sqrt(Math.abs((x * x) + (y * y)));
 
     if (distance <= circle.radius) {
-      mouse.x = x;
-      mouse.y = y;
-      mouse.detected = true;
+      this.doUpdate(mouse)
+      return true;
     } else {
       mouse.reset();
     }
+
+    return false;
   }
 
-  private detectRectangleCollision(components: Map<ComponentTypes, IComponent>) {
+  private detectRectangleCollision(components: Map<ComponentTypes, IComponent>): boolean {
     const pos = components.get(ComponentTypes.POSITION)! as Position;
     const mouse = components.get(ComponentTypes.MOUSE_COLLISION)! as MouseCollisionComponent;
     const size = components.get(ComponentTypes.SIZE)! as SizeComponent;
 
     if (this.x >= pos.x && this.y >= pos.y && this.x <= (pos.x + size.width) && this.y <= (pos.y + size.height)) {
-      mouse.x = this.x;
-      mouse.y = this.y;
-      mouse.detected = true;
+      this.doUpdate(mouse)
+      return true;
     } else {
       mouse.reset()
     }
+    return false;
   }
+
+  private doUpdate(mouse: MouseCollisionComponent) {
+    mouse.x = this.x;
+    mouse.y = this.y;
+    mouse.detected = true;
+    mouse.mouseDown = this.mouseDown;
+  }
+
 }
 
 export const mouseCollisionDetection = new MouseCollisionDetection();

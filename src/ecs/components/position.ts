@@ -1,10 +1,14 @@
 import { ComponentTypes, IComponent } from "../types/component_types";
+import { EntityType, IEntity } from "../types/entity_types";
+import { CircleComponent } from "./circle";
 
 export class Position implements IComponent {
   protected _x: number;
   protected _y: number;
+  protected _entity: IEntity;
 
-  constructor(x = 0, y = 0) {
+  constructor(entity: IEntity, x = 0, y = 0) {
+    this._entity = entity;
     this._x = x;
     this._y = y;
   }
@@ -15,6 +19,31 @@ export class Position implements IComponent {
 
   get x() {
     return this._x;
+  }
+
+  /**
+   * Always return the top x considering the entity type
+   */
+  get topX() {
+    let x = this.x;
+    this._entity.get(ComponentTypes.CIRCLE, (c) => {
+      x -= (c as CircleComponent).radius;
+    })
+
+    return x;
+  }
+
+  /**
+   * 
+   * Always return the top y considering the entity type
+   */
+  get topY() {
+    let y = this.y;
+    this._entity.get(ComponentTypes.CIRCLE, (c) => {
+      y -= (c as CircleComponent).radius;
+    })
+
+    return y;
   }
 
   set x(value: number) {

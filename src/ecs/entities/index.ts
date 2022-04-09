@@ -7,7 +7,7 @@ export class Entity implements IEntity {
   protected _component: Map<ComponentTypes, IComponent>;
   protected _type: EntityType;
 
-  constructor(type: EntityType,id?: string) {
+  constructor(type: EntityType, id?: string) {
     this._id = id || manager.newId();
     this._component = new Map();
     this._type = type;
@@ -17,7 +17,7 @@ export class Entity implements IEntity {
     return this._id;
   }
 
-  get type(){
+  get type() {
     return this._type;
   }
 
@@ -44,21 +44,26 @@ export class Entity implements IEntity {
     return (allFound || any) ? list : null;
   }
 
-  get(type: ComponentTypes, callback?: (component: IComponent) => void): IComponent | null {
+  get(type: ComponentTypes, callback?: (component: IComponent) => void, notfoundCallback?: () => void): IComponent | null {
     const cmp = this._component.get(type);
 
     if (cmp && callback) {
       callback(cmp);
-    } 
+    } else if (!cmp && notfoundCallback) {
+      notfoundCallback()
+    }
 
     return cmp || null;
   }
 
   toJSON(): { [key: string]: any; } | null {
-    const list:{[key:string]: {[key:string]: any}} = {};
+    const list: { [key: string]: { [key: string]: any } } = {};
 
     this._component.forEach((cmp) => {
-      list[cmp.type as string] = cmp.toJSON()
+      const json = cmp.toJSON();
+      if (Object.keys(json).length > 0) {
+        list[cmp.type as string] = cmp.toJSON()
+      }
     });
 
     return {
@@ -69,7 +74,7 @@ export class Entity implements IEntity {
   }
 
   fromJSON(json: { [key: string]: any; }): void {
-    json = json as { id: string, type: EntityType, components: {[key:string]: {[key:string]: any}} };
+    json = json as { id: string, type: EntityType, components: { [key: string]: { [key: string]: any } } };
     this._id = json.id;
     this._type = json.type;
 

@@ -4,10 +4,11 @@ export class MouseCollisionComponent implements IComponent {
   private _detected: boolean = false;
   private _x: number = -1;
   private _y: number = -1;
+  private _mouseDown = false;
 
   get type(): ComponentTypes {
     return ComponentTypes.MOUSE_COLLISION;
-  } 
+  }
 
   get x() {
     return this._x;
@@ -33,8 +34,17 @@ export class MouseCollisionComponent implements IComponent {
     this._detected = d;
   }
 
+  get mouseDown() {
+    return this._mouseDown
+  }
+
+  set mouseDown(d: boolean) {
+    this._mouseDown = d;
+  }
+
   public reset() {
     this.detected = false;
+    this.mouseDown = false;
     this.x - 1;
     this.y = -1;
   }
@@ -44,6 +54,6 @@ export class MouseCollisionComponent implements IComponent {
   }
 
   fromJSON(_json: { [key: string]: any; }): void {
-     // nothing todo here 
+    // nothing todo here 
   }
 }

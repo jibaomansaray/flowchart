@@ -10,9 +10,12 @@ import { SizeComponent } from "../components/size";
 import { CircleComponent } from "../components/circle";
 
 export class Interaction implements ISystem {
+  private _offsetX: number = 0;
+  private _offsetY: number = 0;
 
-  setup(_canvas: HTMLCanvasElement): void {
-
+  setup(canvas: HTMLCanvasElement): void {
+    this._offsetX = canvas.getBoundingClientRect().left;
+    this._offsetY = canvas.getBoundingClientRect().top;
   }
 
   update(entity: IEntity, _ctx: CanvasRenderingContext2D, _timestamp: number): void {
@@ -26,20 +29,23 @@ export class Interaction implements ISystem {
 
   private doInteraction(components: Map<ComponentTypes, IComponent>, ent: IEntity) {
     const mouseComponent = components.get(ComponentTypes.MOUSE_COLLISION)! as MouseCollisionComponent;
+
+    this.toggleBox(mouseComponent.detected, components, ent);
+    this.toggleFill(mouseComponent.detected, components, ent);
+    this.move(mouseComponent, components, ent);
+  }
+
+  private toggleFill(detected: boolean, components: Map<ComponentTypes, IComponent>, ent: IEntity) {
     const drawable = components.get(ComponentTypes.DRAWABLE)! as DrawableComponent;
     const interact = components.get(ComponentTypes.INTERACT)! as InteractComponent;
-
-
     ent.get(ComponentTypes.FILLABLE, (com) => {
       const c = com as FillableComponent;
-      if (mouseComponent.detected) {
-        this.toggleBox(true, components, ent);
+      if (detected) {
         drawable.tempStrokeStyle = interact.strokeStyle;
         if (c.fill) {
           c.tempFillStyle = interact.fillStyle;
         }
       } else {
-        this.toggleBox(false, components, ent);
         drawable.tempStrokeStyle = '';
         if (c.fill) {
           c.tempFillStyle = ''
@@ -84,6 +90,16 @@ export class Interaction implements ISystem {
       });
     }
 
+  }
+
+  private move(mouse: MouseCollisionComponent , _components: Map<ComponentTypes, IComponent>, ent: IEntity) {
+    if (mouse.detected && mouse.mouseDown) {
+      ent.get(ComponentTypes.POSITION, (c) => {
+        const p = c as Position;
+        p.x = mouse.x;
+        p.y = mouse.y;
+      });
+    } 
   }
 }
 

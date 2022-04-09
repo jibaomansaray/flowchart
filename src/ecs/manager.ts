@@ -36,6 +36,10 @@ class Manager {
     return entity;
   }
 
+  getEntity(id: string): IEntity | null {
+    return this._entities.get(id) || null
+  }
+
   removeEntity(id: Array<string> | string) {
     const entity = (Array.isArray(id)) ? id : [id];
     entity.forEach((e) => {

@@ -12,7 +12,12 @@ export class RenderCircle implements ISystem {
   }
 
   update(entity: IEntity, ctx: CanvasRenderingContext2D, _timestamp: number): void {
-    const list = [ComponentTypes.POSITION, ComponentTypes.CIRCLE, ComponentTypes.DRAWABLE];
+    const list = [
+      ComponentTypes.POSITION,
+      ComponentTypes.CIRCLE,
+      ComponentTypes.DRAWABLE,
+      ComponentTypes.CIRCLE_SHAPE_TAG
+    ];
 
     const components = entity.components(list, false);
     if (components) {

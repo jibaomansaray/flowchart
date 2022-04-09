@@ -10,7 +10,12 @@ export class RenderRectangle implements ISystem {
   setup(_canvas: HTMLCanvasElement): void { }
 
   update(entity: IEntity, ctx: CanvasRenderingContext2D, _timestamp: number): void {
-    const list = [ComponentTypes.POSITION, ComponentTypes.SIZE, ComponentTypes.DRAWABLE];
+    const list = [
+      ComponentTypes.POSITION,
+      ComponentTypes.SIZE,
+      ComponentTypes.DRAWABLE,
+      ComponentTypes.RECTANGLE_SHAPE_TAG
+    ];
     const components = entity.components(list, false);
     if (components) {
       this.render(components, ctx, entity);

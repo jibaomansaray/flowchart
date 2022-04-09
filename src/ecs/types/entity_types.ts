@@ -5,6 +5,7 @@ export enum EntityType {
   RECTANGLE = 'rectangle',
   LINE = 'line',
   INTERACT = 'interact',
+  CONNECTOR = 'connector',
   FLOWCHART_START = 'start',
   FLOWCHART_STATE = 'state',
   FLOWCHART_CONDITION = 'condition',

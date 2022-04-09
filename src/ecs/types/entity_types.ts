@@ -18,7 +18,7 @@ export interface IEntity {
   get type(): EntityType;
   components(types: Array<ComponentTypes>, any: boolean): Map<ComponentTypes, IComponent> | null;
   add(component: IComponent | Array<IComponent>): void;
-  get(type: ComponentTypes, callback?: (component: IComponent) => void): IComponent | null;
+  get(type: ComponentTypes, callback?: (component: IComponent) => void, notfoundCallback?: () => void): IComponent | null;
   toJSON(): { [key:string]: any } | null;
   fromJSON(json: { [key:string]: any }): void;
 }

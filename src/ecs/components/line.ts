@@ -1,4 +1,5 @@
 import { ComponentTypes, IComponent } from "../types/component_types";
+import { IEntity } from "../types/entity_types";
 import { Position } from "./position";
 
 export class LineComponent implements IComponent {
@@ -6,9 +7,9 @@ export class LineComponent implements IComponent {
   private _pointA: Position;
   private _pointB: Position;
 
-  constructor(pointA: Position = new Position(), pointB: Position = new Position()) {
-    this._pointA = pointA;
-    this._pointB = pointB;
+  constructor(entity: IEntity) {
+    this._pointA = new Position(entity);
+    this._pointB = new Position(entity);
   }
 
   get type(): ComponentTypes {

@@ -39,7 +39,7 @@ export class Interaction implements ISystem {
     const interact = components.get(ComponentTypes.INTERACT)! as InteractComponent;
     ent.get(ComponentTypes.FILLABLE, (com) => {
       const c = com as FillableComponent;
-      if (detected) {
+      if (detected && interact.fill) {
         drawable.tempStrokeStyle = interact.strokeStyle;
         if (c.fill) {
           c.tempFillStyle = interact.fillStyle;
@@ -59,7 +59,7 @@ export class Interaction implements ISystem {
     const size = ent.get(ComponentTypes.SIZE)! as SizeComponent;
     const circle = ent.get(ComponentTypes.CIRCLE)! as CircleComponent;
 
-    if (detected) {
+    if (detected && interact.highlight) {
       interact.box.get(ComponentTypes.POSITION, (c) => {
         const p = c as Position;
         if (circle) {

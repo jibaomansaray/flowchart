@@ -34,11 +34,13 @@ export class RenderCircle implements ISystem {
 
     // @todo filling
 
+    ctx.save()
     ctx.beginPath();
     ctx.arc(pos.x, pos.y, circle.radius, circle.startAngle, circle.endAngle, circle.counterClockwise);
 
     ctx.strokeStyle = drawable.strokeStyle;
     ctx.setLineDash(drawable.lineDash);
+    ctx.lineWidth = drawable.lineWidth;
 
     if (fillable && (fillable as FillableComponent).fill) {
       ctx.fillStyle = (fillable as FillableComponent).fillStyle;
@@ -46,6 +48,8 @@ export class RenderCircle implements ISystem {
     } else {
       ctx.stroke();
     }
+
+    ctx.restore()
   }
 }
 

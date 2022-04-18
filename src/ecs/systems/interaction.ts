@@ -32,7 +32,6 @@ export class Interaction implements ISystem {
 
     this.toggleBox(mouseComponent.detected, components, ent);
     this.toggleFill(mouseComponent.detected, components, ent);
-    this.move(mouseComponent, components, ent);
   }
 
   private toggleFill(detected: boolean, components: Map<ComponentTypes, IComponent>, ent: IEntity) {
@@ -92,15 +91,6 @@ export class Interaction implements ISystem {
 
   }
 
-  private move(mouse: MouseCollisionComponent , _components: Map<ComponentTypes, IComponent>, ent: IEntity) {
-    if (mouse.detected && mouse.mouseDown) {
-      ent.get(ComponentTypes.POSITION, (c) => {
-        const p = c as Position;
-        p.x = mouse.x;
-        p.y = mouse.y;
-      });
-    } 
-  }
 }
 
 export const interaction = new Interaction();

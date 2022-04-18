@@ -2,6 +2,7 @@ import { ComponentTypes, IComponent } from "../types/component_types";
 
 export enum EntityType {
   CIRCLE = 'circle',
+  DOT= 'dot',
   RECTANGLE = 'rectangle',
   LINE = 'line',
   INTERACT = 'interact',

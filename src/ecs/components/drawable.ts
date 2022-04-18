@@ -49,17 +49,27 @@ export class DrawableComponent implements IComponent {
     ];
   }
 
+  get lineWidth() {
+    return this._lineWidth;
+  }
+
+  set lineWidth(w: number) {
+    this._lineWidth = w;
+  }
+
 
   toJSON(): { [key: string]: any; } {
     return {
-        stokeStyle: this._strokeStyle // we don't want the temp color
+        stokeStyle: this._strokeStyle, // we don't want the temp color
+        lineWidth: this.lineWidth
     }
   }
 
   fromJSON(json: { [key: string]: any; }): void {
-    json = json as { strokeStyle: string };
+    json = json as { strokeStyle: string, lineWidth: number };
 
     this.strokeStyle = json.strokeStyle;
+    this.lineWidth = json.lineWidth;
   }
 
 }

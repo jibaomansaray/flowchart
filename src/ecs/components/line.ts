@@ -6,10 +6,12 @@ export class LineComponent implements IComponent {
 
   private _pointA: Position;
   private _pointB: Position;
+  private _drawHead: boolean;
 
   constructor(entity: IEntity) {
     this._pointA = new Position(entity);
     this._pointB = new Position(entity);
+    this._drawHead = false;
   }
 
   get type(): ComponentTypes {
@@ -62,6 +64,14 @@ export class LineComponent implements IComponent {
 
   set bY(y: number) {
     this._pointB.y = y;
+  }
+
+  get drawHead() {
+    return this._drawHead;
+  }
+
+  set drawHead(d: boolean) {
+    this._drawHead = d;
   }
 
   toJSON(): { [key: string]: any; } {

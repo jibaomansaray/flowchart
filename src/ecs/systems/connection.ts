@@ -64,20 +64,18 @@ export class Connection implements ISystem {
     let bY = pointB.topY;
 
     // 100 is the width;
-    if (pointA.x > pointB.x && pointA.x > pointB.x + pointBSize.width) {
+    if (pointA.topX > pointB.topX && pointA.topX > pointB.topX + pointBSize.width) {
       directionX = DIRECTION.RIGHT;
-    } else if (pointB.x > pointA.x && pointB.x > pointA.x + pointASize.width) {
+    } else if (pointB.topX > pointA.topX && pointB.topX > pointA.topX + pointASize.width) {
       directionX = DIRECTION.LEFT;
-    } else {
     }
 
 
     // 100 is the height;
-    if (pointA.y > pointB.y && pointA.y > pointB.y + pointBSize.height) {
+    if (pointA.topY > pointB.topY && pointA.topY > pointB.topY + pointBSize.height) {
       directionY = DIRECTION.BOTTOM;
-    } else if (pointB.y > pointA.y && pointB.y > pointA.y + pointASize.height) {
+    } else if (pointB.topY > pointA.topY && pointB.topY > pointA.topY + pointASize.height) {
       directionY = DIRECTION.TOP;
-    } else {
     }
 
 

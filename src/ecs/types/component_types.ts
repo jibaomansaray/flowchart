@@ -1,5 +1,6 @@
 export enum ComponentTypes {
   DRAWABLE = 'drawable',                      // The entity is drawable
+  DRAGGABLE = 'draggable',                    // The entity is draggable by the mouse
   FILLABLE = 'fillable',                      // The entity can be will with something eg. color
   POSITION = 'position',                      // The entity can be position on the canvas
   CIRCLE = 'circle',                          // The entity is a circle

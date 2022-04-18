@@ -1,6 +1,7 @@
 import { Entity } from ".";
 import { CircleComponent } from "../components/circle";
 import { ConnectableComponent } from "../components/connectable";
+import { DraggableComponent } from "../components/draggable";
 import { DrawableComponent } from "../components/drawable";
 import { FillableComponent } from "../components/fillable";
 import { InteractComponent } from "../components/interact";
@@ -24,6 +25,7 @@ export class CircleEntity extends Entity {
     this.add(new ConnectableComponent(this));
     this.add(new SizeComponent(this));
     this.add(new CircleTagComponent());
+    this.add(new DraggableComponent());
   }
 
 }

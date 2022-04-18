@@ -15,6 +15,9 @@ export class ConnectorEntity extends Entity {
     this.add(new LinkComponent());
     this.add(new LineTagComponent());
 
+    this.get(ComponentTypes.LINE, (l) => {
+      (l as LineComponent).drawHead = true;
+    });
     this.get(ComponentTypes.DRAWABLE, (d) => { 
       (d as DrawableComponent).strokeStyle = 'red';
     });

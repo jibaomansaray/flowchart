@@ -36,7 +36,6 @@ export class Connection implements ISystem {
         }
         const link = connector.get(ComponentTypes.LINK) as LinkComponent;
         if (link.active && to) {
-          manager.addEntity(connector);
 
           link.from = link.from || entity.id;
           link.to = link.to || to.id;

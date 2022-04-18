@@ -5,11 +5,13 @@ export class DrawableComponent implements IComponent {
   private _strokeStyle: string;
   private _tempStrokeStyle: string;
   private _lineDash: number[];
+  private _lineWidth: number;
 
   constructor(strokeStyle = 'black') {
     this._strokeStyle = strokeStyle;
     this._tempStrokeStyle = '';
     this._lineDash = [];
+    this._lineWidth = 1;
   }
 
   get type(): ComponentTypes {

@@ -8,6 +8,7 @@ import { DrawableComponent } from "../components/drawable";
 import { InteractComponent } from "../components/interact";
 import { ConnectableComponent } from "../components/connectable";
 import { RectangleTagComponent } from "../components/tags/rectangle_shape";
+import { DraggableComponent } from "../components/draggable";
 
 export class RectangleEntity extends Entity {
 
@@ -21,5 +22,6 @@ export class RectangleEntity extends Entity {
     this.add(new InteractComponent(this));
     this.add(new ConnectableComponent(this));
     this.add(new RectangleTagComponent());
+    this.add(new DraggableComponent());
   }
 }

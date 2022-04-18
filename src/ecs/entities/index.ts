@@ -28,6 +28,13 @@ export class Entity implements IEntity {
     })
   }
 
+  remove(type: ComponentTypes | Array<ComponentTypes>): void {
+    const list = (Array.isArray(type)) ? type : [type];
+    list.forEach((t) => {
+      this._component.delete(t);
+    })
+  }
+
   components(types: ComponentTypes[], any: boolean): Map<ComponentTypes, IComponent> | null {
     const list = new Map<ComponentTypes, IComponent>()
     let allFound = true;

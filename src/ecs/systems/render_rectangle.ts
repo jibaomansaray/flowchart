@@ -29,6 +29,7 @@ export class RenderRectangle implements ISystem {
     const drawable = components.get(ComponentTypes.DRAWABLE)! as DrawableComponent;
     const fillable = ent.get(ComponentTypes.FILLABLE);
 
+    ctx.save()
     ctx.strokeStyle = drawable.strokeStyle;
     ctx.setLineDash(drawable.lineDash);
 
@@ -38,6 +39,8 @@ export class RenderRectangle implements ISystem {
     } else {
       ctx.strokeRect(pos.x, pos.y, size.width, size.height);
     }
+
+    ctx.restore()
   }
 }
 
